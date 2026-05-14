@@ -1,6 +1,7 @@
 from fastmcp import FastMCP
 from db import SQLiteAdapter, ValidationError
 import json
+from typing import Optional, List, Dict
 
 # Khởi tạo MCP Server
 mcp = FastMCP("SQLite Lab Server")
@@ -9,7 +10,7 @@ db = SQLiteAdapter("lab.db")
 # --- Tools ---
 
 @mcp.tool()
-def search(table: str, columns: list[str] = None, filters: dict = None, limit: int = 20, offset: int = 0) -> str:
+def search(table: str, columns: Optional[List[str]] = None, filters: Optional[Dict] = None, limit: int = 20, offset: int = 0) -> str:
     """
     Tìm kiếm dữ liệu trong một bảng.
     - table: tên bảng (ví dụ: students)
@@ -42,7 +43,7 @@ def insert(table: str, values: dict) -> str:
         return f"Unexpected error: {str(e)}"
 
 @mcp.tool()
-def aggregate(table: str, metric: str, column: str = None, filters: dict = None) -> str:
+def aggregate(table: str, metric: str, column: Optional[str] = None, filters: Optional[Dict] = None) -> str:
     """
     Thực hiện các phép toán thống kê trên bảng.
     - table: tên bảng
